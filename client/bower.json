@@ -1,0 +1,25 @@
+{
+  "name": "chatter",
+  "version": "0",
+  "homepage": "https://github.com/irfanbaqui/2015-03-chatterbox-server",
+  "authors": [
+    "Irfan",
+    "Andy"
+  ],
+  "description": "test",
+  "main": "index.thml",
+  "moduleType": [
+    "node"
+  ],
+  "keywords": [
+    "null"
+  ],
+  "license": "HR",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

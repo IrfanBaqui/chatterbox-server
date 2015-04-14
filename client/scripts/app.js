@@ -2,13 +2,13 @@ var app = {};
 app.init = function(){
 
 };
-app.server = 'https://api.parse.com/1/classes/chatterbox';
+app.server = 'http://127.0.0.1:3000/';
 app.send = function(object){
   $.ajax({
-    url: app.server,
+    url: app.server + 'classes/messages',
     type: 'POST',
     data: JSON.stringify(object),
-    contentType: 'application/json',
+    contentType: 'text/plain',
     success: function (data) {
       app.fetch(data.objectId);
     },
@@ -20,13 +20,17 @@ app.send = function(object){
 
 app.fetch = function(){
   $.ajax({
-    url: app.server,
+    url: app.server + 'classes/messages',
     type: 'GET',
-    data: {limit: 1, order: "-createdAt"},
-    contentType: 'application/json',
+    // data: {limit: 1, order: "-createdAt"},
+    data: {limit: 1},
+    contentType: 'text/plain',
     success: function (data) {
-        for (var i = 0; i < data.results.length; i++) {
-          app.addMessage(data.results[i]);
+      var parsedData = JSON.parse(data);
+      console.log(typeof parsedData);
+      console.dir(parsedData);
+        for (var i = 0; i < parsedData.results.length; i++) {
+          app.addMessage(parsedData.results[i]);
         }
     },
     error: function (data) {

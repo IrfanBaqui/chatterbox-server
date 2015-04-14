@@ -1,0 +1,18 @@
+{
+  "name": "Chatterbox",
+  "version": "0.0.2",
+  "description": "null",
+  "main": "index.html",
+  "scripts": {
+    "test": "null"
+  },
+  "repository": {
+    "type": "git",
+    "url": "null"
+  },
+  "keywords": [
+    "chatterbox"
+  ],
+  "author": "irfan, Andy",
+  "license": "HR"
+}

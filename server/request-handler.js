@@ -17,13 +17,12 @@ var requestHandler = exports.requestHandler = function(request, response) {
 
   //Primary Log
   console.log("Serving request type " + request.method + " for url " + request.url);
-
   //Supported URLs
   var baseURL1 = '/classes/room';
   var baseURL2 = '/classes/messages';
   var statusCode;
 
-  //Unsupported URLs return 404 status code
+  // Unsupported URLs return 404 status code
   if (request.url.indexOf(baseURL1) === -1 && request.url.indexOf(baseURL2) === -1) {
     statusCode = 404;
     var headers = defaultCorsHeaders;
@@ -33,17 +32,19 @@ var requestHandler = exports.requestHandler = function(request, response) {
   }
 
   statusCode = 200;
-
   if (request.method === 'GET' && (request.url.indexOf(baseURL1) > -1 || request.url.indexOf(baseURL2) > -1)) {
 
     var headers = defaultCorsHeaders;
     headers['Content-Type'] = "text/plain";
     response.writeHead(statusCode, headers);
+    console.log('GET method works');
     response.end(JSON.stringify(obj));
   }
 
   if (request.method === 'POST')  {
     var str = "";
+    console.log('POST method works');
+
     request.on('data', function (chunk) {
       str = str + chunk;
     });
