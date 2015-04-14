@@ -19,6 +19,7 @@ var ip = "127.0.0.1";
 
 
 
+
 // We use node's http module to create a server.
 //
 // The function we pass to http.createServer will be used to handle all
@@ -28,6 +29,7 @@ var ip = "127.0.0.1";
 var server = http.createServer(handler.requestHandler);
 console.log("Listening on http://" + ip + ":" + port);
 server.listen(port, ip);
+
 
 // To start this server, run:
 //
