@@ -11,12 +11,12 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
-var obj = {results: []};
-
+var obj = {'results': []};
+var fs = require('fs');
 var requestHandler = exports.requestHandler = function(request, response) {
 
   //Primary Log
-  console.log("Serving request type " + request.method + " for url " + request.url);
+  // console.log("Serving request type " + request.method + " for url " + request.url);
   //Supported URLs
   var baseURL1 = '/classes/room';
   var baseURL2 = '/classes/messages';
@@ -43,13 +43,49 @@ var requestHandler = exports.requestHandler = function(request, response) {
 
   if (request.method === 'POST')  {
     var str = "";
-    console.log('POST method works');
 
     request.on('data', function (chunk) {
       str = str + chunk;
     });
+
+
     request.on('end', function () {
       obj.results.push(JSON.parse(str));
+
+
+      fs.readFile('test.txt', 'utf-8', function(err, data) {
+        console.log("First line of data: ", data);
+
+        if(err){
+          var newObject = {'results': []};
+          newObject.results.push(JSON.parse(str));
+          fs.writeFile('test.txt', JSON.stringify(newObject), function(err){
+            if(err) throw err;
+            console.log('made new file!');
+          });
+        }
+
+        else {
+          var readStream = fs.createReadStream('test.txt');
+          var chunks = "";
+          readStream.on('data', function(chunk) {
+            chunks += chunk;
+          });
+          readStream.on('end', function() {
+            var existingData = JSON.parse(chunks);
+            var newData = JSON.parse(str);
+            existingData.results.push(newData);
+
+            fs.writeFile('test.txt', JSON.stringify(existingData), function(err) {
+              if(err) throw err;
+              console.log('its saved!');
+            });
+          });
+        }
+
+      });
+
+      console.log(fs.readFile('test.txt'));
     });
     statusCode = 201;
     var headers = defaultCorsHeaders;
